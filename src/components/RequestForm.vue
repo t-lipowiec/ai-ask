@@ -17,9 +17,9 @@
 
 <style >
     .req-form {
-        height: 500px;
+        height: 75%;
         width: 90%;
-        
+
     }
     form{
         background-color: rgb(162, 123, 255);
@@ -36,12 +36,13 @@
         border-radius: 30px;
         width: 80%;
         height: 20%;
-        border: none; 
+        border: none;
         background-color: white;
         font-size: 1.5rem;
     }
     input[type=submit]{
         width: 40%;
         height: 10%;
+        font-size: 90%;
     }
 </style>

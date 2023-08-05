@@ -3,9 +3,9 @@
     import ResponseWindow from './components/ResponseWindow.vue'
 
     function handleMsg(event){
-        
+
     }
-    
+
 </script>
 
 <template>
@@ -37,6 +37,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        padding: 3% 0 3% 0;
         /* justify-content: space-around; */
     }
     .app-section p{

@@ -3,8 +3,8 @@
 
     let id = 0
 
-    const ws = null
-    const msg = null
+    let ws = null
+    let msg = null
 
     const responses = ref([
         { id: id++, prompt: 'HI', answer: 'HELLO'},
@@ -16,17 +16,27 @@
         responses.value.push({id: id++, prompt: 'Hi'+id, answer: 'Hello'+id})
     }
 
-    function addResponseMessage(){
-        responses.value.push({id: id++, prompt: 'Hi'+id, answer: this.msg})
+    function addResponseMessage(prompt, answer){
+        responses.value.push({id: id++, prompt: prompt+id, answer: answer})
     }
 
     function handleMessage(event){
-        this.msg = event.data
-        addResponseMessage()
+
+        console.log(`Event data: ${event.data}`)
+        let msg = JSON.parse(event.data)
+        let msgContent = msg["Ai-mess"]
+        addResponseMessage("Ai-mess", msgContent)
+
     }
 
     onMounted( () => {
-        ws.value = new WebSocket('ws://127.0.0.1:9010')
+        let url = new URL('http://192.168.150.18:9999/.well-known/mercure')
+
+        url.searchParams.append('topic', '/Ai-pubs');
+        ws = new EventSource(url);
+
+        //const eventSource = new EventSource(url);
+        //ws.value = new WebSocket('ws://127.0.0.1:9010')
         ws.onmessage = handleMessage
     })
 
@@ -34,27 +44,29 @@
 
 <template>
     <div class="res-console">
+    <button @click="addResponse()">Add res</button>
         <table>
             <tr>
                 <th>Prompt</th>
                 <th>Answer</th>
             </tr>
             <tr v-for="response in responses" :key="responses.id">
-                <td>{{ response.prompt }}</td> 
+                <td>{{ response.prompt }}</td>
                 <td>{{ response.answer }}</td>
             </tr>
         </table>
-        <button @click="addResponse()">Add res</button>
+
     </div>
 </template>
 
 <style >
     .res-console{
         background-color: black;
-        height: 60%;
+        height: 75%;
         width: 90%;
         border-radius: 40px;
         color: white;
+        overflow-y: scroll;
     }
     table{
         width: 100%;
