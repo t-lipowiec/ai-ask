@@ -6,11 +6,7 @@
     let ws = null
     let msg = null
 
-    const responses = ref([
-        { id: id++, prompt: 'HI', answer: 'HELLO'},
-        { id: id++, prompt: 'HIiiii', answer: 'HELLOa'},
-        { id: id++, prompt: 'HIee', answer: 'HELLOee'}
-    ])
+    const responses = ref([])
 
     function addResponse(){
         responses.value.push({id: id++, prompt: 'Hi'+id, answer: 'Hello'+id})
@@ -24,19 +20,16 @@
 
         console.log(`Event data: ${event.data}`)
         let msg = JSON.parse(event.data)
-        let msgContent = msg["Ai-mess"]
-        addResponseMessage("Ai-mess", msgContent)
+        let msgPrompt = msg["prompt"]
+        let msgAnswer = msg["answer"]
+        addResponseMessage(msgPrompt, msgAnswer)
 
     }
 
     onMounted( () => {
         let url = new URL('http://192.168.150.18:9999/.well-known/mercure')
-
         url.searchParams.append('topic', '/Ai-pubs');
         ws = new EventSource(url);
-
-        //const eventSource = new EventSource(url);
-        //ws.value = new WebSocket('ws://127.0.0.1:9010')
         ws.onmessage = handleMessage
     })
 
@@ -44,7 +37,6 @@
 
 <template>
     <div class="res-console">
-    <button @click="addResponse()">Add res</button>
         <table>
             <tr>
                 <th>Prompt</th>
@@ -66,7 +58,7 @@
         width: 90%;
         border-radius: 40px;
         color: white;
-        overflow-y: scroll;
+        overflow-y: auto;
     }
     table{
         width: 100%;

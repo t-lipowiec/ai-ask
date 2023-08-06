@@ -1,11 +1,6 @@
 <script setup lang="ts">
     import RequestForm from './components/RequestForm.vue'
     import ResponseWindow from './components/ResponseWindow.vue'
-
-    function handleMsg(event){
-
-    }
-
 </script>
 
 <template>
@@ -22,18 +17,18 @@
 </template>
 
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap');
     #my-app{
         width: 80vw;
         min-height: 80vh;
-        background-color: rgb(43, 88, 128);
         display: flex;
         align-items: center;
         justify-content: center;
+        font-family: 'Inter', sans-serif;
     }
     .app-section{
         width: 50%;
         height: 80vh;
-        background-color: azure;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -41,8 +36,9 @@
         /* justify-content: space-around; */
     }
     .app-section p{
-        margin: 10% 0 10%;
+        margin: 1% 0 10%;
         text-align: center;
-        font-size: 2rem;
+        font-size: 3rem;
+        color: white;
     }
 </style>
