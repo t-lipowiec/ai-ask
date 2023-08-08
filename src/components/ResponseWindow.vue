@@ -27,7 +27,8 @@
     }
 
     onMounted( () => {
-        let url = new URL('http://192.168.150.18:9999/.well-known/mercure')
+        //const url = new URL('http://127.0.0.1:9999/.well-known/mercure')
+        const url = new URL('http://192.168.1.104:9999/.well-known/mercure')
         url.searchParams.append('topic', '/Ai-pubs');
         ws = new EventSource(url);
         ws.onmessage = handleMessage

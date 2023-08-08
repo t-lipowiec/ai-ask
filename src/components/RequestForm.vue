@@ -4,11 +4,16 @@
     import axios from 'axios'
     import {ref} from 'vue'
 
-    const form = ref({ bot: '', prompt:''})
+    const form = ref({ bot: '', prompt:'', apikey:'2d846990-ecb2-4cfe-aeb1-5c2bddae0ea1'})
 
     function sendForm(){
-      console.log(`Form submited. Data: ${form.value.bot}, ${form.value.prompt}`)
-      axios.post('http://192.168.150.18:8000/Pub-pub', form.value,
+
+      //const addr = 'http://127.0.0.1:8000/Pub-pub';
+      const addr = 'http://192.168.1.104:8000/Pub-pub';
+
+      console.log(`Form submited. Data: ${form.value.bot}, ${form.value.prompt}, ${form.value.apikey}`)
+
+      axios.post(addr, form.value,
       {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -20,6 +25,7 @@
       .catch(error => {
           console.error(error);
       })
+
     }
 </script>
 
@@ -28,11 +34,15 @@
         <form v-on:submit.prevent="sendForm">
             <div>
               <label>Bot</label>
-              <input v-model="form.bot" type="text" placeholder="bot"/>
+              <input v-model="form.bot" type="text" placeholder="bot" required/>
             </div>
             <div>
               <label>Prompt</label>
-              <input v-model="form.prompt" type="text" placeholder="prompt"/>
+              <input v-model="form.prompt" type="text" placeholder="prompt" required/>
+            </div>
+            <div>
+              <label>Key</label>
+              <input v-model="form.apikey" type="text" defaultValue="2d846990-ecb2-4cfe-aeb1-5c2bddae0ea1" placeholder="2d846990-ecb2-4cfe-aeb1-5c2bddae0ea1"/>
             </div>
             <input type="Submit" value="Send request" />
         </form>
@@ -56,7 +66,7 @@
         border-radius: 30px;
     }
     form div{
-      height: 30%;
+      height: 20%;
       width: 100%;
       display: flex;
       align-items: center;
@@ -73,7 +83,7 @@
         height: 50%;
         border: none;
         background-color: white;
-        font-size: 1.5rem;
+        font-size: 0.8rem;
         aniamation: input-unpulse 1s;
     }
     @keyframes input-pulse {
